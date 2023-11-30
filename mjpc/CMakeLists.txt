@@ -25,7 +25,7 @@ target_link_libraries(
 target_include_directories(threadpool PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 find_package(Protobuf REQUIRED)
-include_directories(${Protobuf_INCLUDE_DIRS})
+include_directories(${PROTOBUF_INCLUDE_DIRS})
 
 get_filename_component(agent_state_proto "./agent_state.proto" ABSOLUTE)
 get_filename_component(agent_state_proto_path "${agent_state_proto}" PATH)
