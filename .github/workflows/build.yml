@@ -12,12 +12,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-20.04
-            additional_label: "with Clang 12"
+          - os: ubuntu-22.04
+            additional_label: "with Clang 14"
             cmake_args: >-
               -G Ninja
-              -DCMAKE_C_COMPILER:STRING=clang-12
-              -DCMAKE_CXX_COMPILER:STRING=clang++-12
+              -DCMAKE_C_COMPILER:STRING=clang-14
+              -DCMAKE_CXX_COMPILER:STRING=clang++-14
               -DMJPC_BUILD_GRPC_SERVICE:BOOL=ON
             additional_targets: "agent_server direct_server filter_server"
             tmpdir: "/tmp"
@@ -50,6 +50,15 @@ jobs:
         PB_REL="https://github.com/protocolbuffers/protobuf/releases" &&
         curl -LO $PB_REL/download/v3.15.8/protoc-3.15.8-linux-x86_64.zip &&
         unzip protoc-3.15.8-linux-x86_64.zip bin/protoc -d /usr/local
+    - name: "[Ubuntu] Remove GCC 13 from runner image"
+      # https://github.com/actions/runner-images/issues/8659
+      if: (inputs.os == 'ubuntu-latest') || (inputs.os == 'ubuntu-22.04') || (inputs.os == 'default')
+      shell: bash
+      run: |
+        echo "Runs on: ${{ inputs.os }}"
+        sudo rm -f /etc/apt/sources.list.d/ubuntu-toolchain-r-ubuntu-test-jammy.list
+        sudo apt-get update
+        sudo apt-get install -y --allow-downgrades libc6=2.35-0ubuntu3.4 libc6-dev=2.35-0ubuntu3.4 libstdc++6=12.3.0-1ubuntu1~22.04 libgcc-s1=12.3.0-1ubuntu1~22.04
     - name: Prepare macOS
       if: ${{ runner.os == 'macOS' }}
       run: brew install ninja protobuf
