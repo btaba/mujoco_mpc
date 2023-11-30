@@ -66,7 +66,7 @@ to simplify the build process.
    "debug"). This will open and run the graphical user interface.
 
 ### macOS
-Additionally, install [Xcode](https://developer.apple.com/xcode/).
+Additionally, install [Xcode](https://developer.apple.com/xcode/), [Brew](https://brew.sh/), and run `brew install protobuf`.
 
 ### Ubuntu
 Additionally, install:
