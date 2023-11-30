@@ -52,7 +52,8 @@ jobs:
         unzip protoc-3.15.8-linux-x86_64.zip bin/protoc -d /usr/local
     - name: Prepare macOS
       if: ${{ runner.os == 'macOS' }}
-      run: brew install ninja protobuf
+      run: >
+        brew install ninja protobuf
     - name: Prepare Windows
       if: ${{ runner.os == 'Windows' }}
       # Install llvm 16 manually, remove after
@@ -73,6 +74,7 @@ jobs:
         cmake .. -DCMAKE_BUILD_TYPE:STRING=Release
         ${{ matrix.cmake_args }}
         $cmake_extra_args
+        protoc --version
     - name: Build MuJoCo MPC
       working-directory: build
       run: cmake --build . --config=Release ${{ matrix.cmake_build_args }} --target mjpc agent_test cost_derivatives_test norm_test rollout_test threadpool_test trajectory_test utilities_test direct_force_test direct_optimize_test direct_parameter_test direct_sensor_test direct_trajectory_test direct_utilities_test batch_filter_test batch_prior_test kalman_test unscented_test ${{ matrix.additional_targets }}
