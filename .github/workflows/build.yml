@@ -2,7 +2,7 @@ name: build
 
 on:
   push:
-    branches: [main, deepmind]
+    branches: [main, deepmind, proto]
   pull_request:
     branches: [main]
 
