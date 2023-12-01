@@ -129,7 +129,7 @@ findorfetch(
   GIT_REPO
   https://github.com/protocolbuffers/protobuf.git
   GIT_TAG
-  v3.25.1
+  v3.25.0
   TARGETS
   protoc
   gtest

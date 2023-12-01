@@ -48,22 +48,21 @@ jobs:
     - name: Prepare macOS
       if: ${{ runner.os == 'macOS' }}
       run: >
-        brew install ninja  
-      # protobuf
-    - name: Install protoc on Linux
-      # Manually install protoc since the available `protobuf-compiler` version 3.6.1 on
-      # ubuntu-20.04 is incompatible with protos in this library.
-      if: ${{ runner.os == 'Linux' }}
-      run: >
-        sudo apt-get remove protobuf-compiler &&
-        git clone https://github.com/abseil/abseil-cpp.git &&
-        cd abseil-cpp && mkdir build && cd build &&
-        cmake .. -DCMAKE_INSTALL_PREFIX=~/Source/CMakeProject/install &&
-        cmake --build . --target install && cd ../.. &&
-        curl -LO https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.25.0.tar.gz &&
-        tar -xzf v3.25.0.tar.gz && cd protobuf-3.25.0 &&
-        cmake .  -Dprotobuf_BUILD_TESTS=OFF &&
-        sudo cmake --build . --config Release --target install
+        brew install ninja protobuf
+    # - name: Install protoc on Linux
+    #   # Manually install protoc since the available `protobuf-compiler` version 3.6.1 on
+    #   # ubuntu-20.04 is incompatible with protos in this library.
+    #   if: ${{ runner.os == 'Linux' }}
+    #   run: >
+    #     sudo apt-get remove protobuf-compiler &&
+    #     git clone https://github.com/abseil/abseil-cpp.git &&
+    #     cd abseil-cpp && mkdir build && cd build &&
+    #     cmake .. -DCMAKE_INSTALL_PREFIX=~/Source/CMakeProject/install &&
+    #     cmake --build . --target install && cd ../.. &&
+    #     curl -LO https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.25.0.tar.gz &&
+    #     tar -xzf v3.25.0.tar.gz && cd protobuf-3.25.0 &&
+    #     cmake .  -Dprotobuf_BUILD_TESTS=OFF &&
+    #     sudo cmake --build . --config Release --target install
     # - name: Print protoc version
     #   run: protoc --version
     - name: Prepare Windows
