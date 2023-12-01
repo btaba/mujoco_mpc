@@ -24,20 +24,19 @@ target_link_libraries(
 )
 target_include_directories(threadpool PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
-# FetchContent_Declare(protobuf
-#   GIT_REPOSITORY https://github.com/protocolbuffers/protobuf.git
-#   GIT_TAG        v21.4
-#   SOURCE_SUBDIR  cmake
-#   FIND_PACKAGE_ARGS NAMES protobuf
-# )
-# FetchContent_MakeAvailable(protobuf)
 
-find_package(Protobuf REQUIRED)
-message(Protobuf_INCLUDE_DIRS="${Protobuf_INCLUDE_DIRS}")
+set(_PROTOBUF_LIBPROTOBUF libprotobuf)
+# set(_REFLECTION grpc++_reflection)
+set(_PROTOBUF_PROTOC $<TARGET_FILE:protoc>)
+# set(_GRPC_GRPCPP grpc++)
+# set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
 
-include_directories(${Protobuf_INCLUDE_DIRS})
-set(_PROTOBUF_PROTOC ${Protobuf_PROTOC_EXECUTABLE})
-message(Protobuf_PROTOC_EXECUTABLE="${Protobuf_PROTOC_EXECUTABLE}")
+# find_package(Protobuf REQUIRED)
+# message(Protobuf_INCLUDE_DIRS="${Protobuf_INCLUDE_DIRS}")
+
+# include_directories(${Protobuf_INCLUDE_DIRS})
+# set(_PROTOBUF_PROTOC ${Protobuf_PROTOC_EXECUTABLE})
+# message(Protobuf_PROTOC_EXECUTABLE="${Protobuf_PROTOC_EXECUTABLE}")
 
 get_filename_component(agent_state_proto "./agent_state.proto" ABSOLUTE)
 get_filename_component(agent_state_proto_path "${agent_state_proto}" PATH)
@@ -48,7 +47,7 @@ add_custom_command(
   OUTPUT
   "${agent_state_proto_srcs}"
   "${agent_state_proto_hdrs}"
-  COMMAND ${Protobuf_PROTOC_EXECUTABLE}
+  COMMAND ${_PROTOBUF_PROTOC}
   ARGS
   --cpp_out "${CMAKE_CURRENT_BINARY_DIR}"
   -I "${agent_state_proto_path}"
@@ -64,7 +63,7 @@ add_library(agent_state_proto_lib STATIC
 
 target_link_libraries(
   agent_state_proto_lib
-  ${Protobuf_LIBRARIES}
+  ${_PROTOBUF_LIBPROTOBUF}
 )
 
 add_library(
@@ -181,7 +180,7 @@ target_link_libraries(
   lodepng
   mujoco::mujoco
   mujoco::platform_ui_adapter
-  ${Protobuf_LIBRARIES}
+  ${_PROTOBUF_LIBPROTOBUF}
   threadpool
   Threads::Threads
 )
