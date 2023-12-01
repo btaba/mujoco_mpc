@@ -48,8 +48,14 @@ jobs:
         libxrandr-dev
         libxi-dev
         ninja-build
-        unzip
-        protobuf-compiler=3.12.*
+        unzip &&
+        PB_REL="https://github.com/protocolbuffers/protobuf/releases" &&
+        curl -LO $PB_REL/download/v21.12/protoc-21.12-linux-x86_64.zip &&
+        unzip protoc-21.12-linux-x86_64.zip bin/protoc -d /usr/local &&
+        curl -LO https://github.com/protocolbuffers/protobuf/archive/refs/tags/v21.12.tar.gz &&
+        tar -xvzf v21.12.tar.gz &&
+
+    # protobuf-compiler=3.12.*
     # curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor >bazel-archive-keyring.gpg &&
     # sudo mv bazel-archive-keyring.gpg /usr/share/keyrings &&
     # echo "deb [arch=amd64 signed-by=/usr/share/keyrings/bazel-archive-keyring.gpg] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list &&
@@ -59,9 +65,7 @@ jobs:
     # cd protobuf-25.1 &&
     # bazel build :protoc :protobuf &&
     # cp bazel-bin/protoc /usr/local/bin
-    # PB_REL="https://github.com/protocolbuffers/protobuf/releases" &&
-    # curl -LO $PB_REL/download/v21.12/protoc-21.12-linux-x86_64.zip &&
-    # unzip protoc-21.12-linux-x86_64.zip bin/protoc -d /usr/local
+
     # - name: "[Ubuntu] Remove GCC 13 from runner image"
     #   # https://github.com/actions/runner-images/issues/8659
     #   if: (inputs.os == 'ubuntu-latest') || (inputs.os == 'ubuntu-22.04') || (inputs.os == 'default')
@@ -78,6 +82,8 @@ jobs:
       run: protoc --version
     - name: Protoc include dir
       run: ls -al /usr/include/google/protobuf
+    - name: Protoc list
+      run: sudo apt list -a protobuf-compiler
     - name: Prepare Windows
       if: ${{ runner.os == 'Windows' }}
       # Install llvm 16 manually, remove after
