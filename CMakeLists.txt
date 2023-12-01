@@ -55,6 +55,8 @@ set(MUJOCO_BUILD_SIMULATE ON)
 set(MUJOCO_BUILD_TESTS OFF)
 set(MUJOCO_TEST_PYTHON_UTIL OFF)
 
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
 set(MUJOCO_MPC_MUJOCO_GIT_TAG
     893c4042302e5a5738dbc462466e746f2bbc1ea5
     CACHE STRING "Git revision for MuJoCo."
@@ -116,60 +118,62 @@ findorfetch(
   EXCLUDE_FROM_ALL
 )
 
-# set(ABSL_PROPAGATE_CXX_STD ON)
-# set(ABSL_BUILD_TESTING OFF)
-# findorfetch(
-#   USE_SYSTEM_PACKAGE
-#   OFF
-#   PACKAGE_NAME
-#   absl
-#   LIBRARY_NAME
-#   abseil-cpp
-#   GIT_REPO
-#   https://github.com/abseil/abseil-cpp.git
-#   GIT_TAG
-#   ${MUJOCO_DEP_VERSION_abseil}
-#   TARGETS
-#   absl::core_headers
-#   EXCLUDE_FROM_ALL
-# )
+if (NOT MJPC_BUILD_GRPC_SERVICE)
+  set(ABSL_ENABLE_INSTALL ON)
+  set(protobuf_BUILD_LIBPROTOC ON)
+  set(protobuf_BUILD_TESTS OFF)
+  findorfetch(
+    USE_SYSTEM_PACKAGE
+    OFF
+    PACKAGE_NAME
+    protobuf
+    LIBRARY_NAME
+    libprotobuf
+    GIT_REPO
+    https://github.com/protocolbuffers/protobuf.git
+    GIT_TAG
+    v4.25.0
+    TARGETS
+    protoc
+    gtest
+    gmock
+    gtest_main
+    EXCLUDE_FROM_ALL
+  )
+else()
+  set(ABSL_PROPAGATE_CXX_STD ON)
+  set(ABSL_BUILD_TESTING OFF)
+  findorfetch(
+    USE_SYSTEM_PACKAGE
+    OFF
+    PACKAGE_NAME
+    absl
+    LIBRARY_NAME
+    abseil-cpp
+    GIT_REPO
+    https://github.com/abseil/abseil-cpp.git
+    GIT_TAG
+    ${MUJOCO_DEP_VERSION_abseil}
+    TARGETS
+    absl::core_headers
+    EXCLUDE_FROM_ALL
+  )
 
-# set(ABSL_ENABLE_INSTALL ON)
-# set(protobuf_BUILD_LIBPROTOC ON)
-# set(protobuf_BUILD_TESTS OFF)
-# findorfetch(
-#   USE_SYSTEM_PACKAGE
-#   OFF
-#   PACKAGE_NAME
-#   protobuf
-#   LIBRARY_NAME
-#   libprotobuf
-#   GIT_REPO
-#   https://github.com/protocolbuffers/protobuf.git
-#   GIT_TAG
-#   v3.21.12
-#   TARGETS
-#   protoc
-#   gtest
-#   gmock
-#   gtest_main
-#   EXCLUDE_FROM_ALL
-# )
-
-findorfetch(
-  USE_SYSTEM_PACKAGE
-  OFF
-  PACKAGE_NAME
-  gRPC
-  LIBRARY_NAME
-  gRPC
-  GIT_REPO
-  https://github.com/grpc/grpc
-  GIT_TAG
-  v1.53.0
-  TARGETS
-  gRPC
-)
+  findorfetch(
+    USE_SYSTEM_PACKAGE
+    OFF
+    PACKAGE_NAME
+    gRPC
+    LIBRARY_NAME
+    gRPC
+    GIT_REPO
+    https://github.com/grpc/grpc
+    GIT_TAG
+    v1.53.0
+    TARGETS
+    gRPC
+  )
+endif()
 
 set(GLFW_BUILD_EXAMPLES OFF)
 set(GLFW_BUILD_TESTS OFF)

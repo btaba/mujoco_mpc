@@ -28,6 +28,15 @@ target_include_directories(threadpool PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/..)
 set(_PROTOBUF_LIBPROTOBUF libprotobuf)
 set(_PROTOBUF_PROTOC $<TARGET_FILE:protoc>)
 
+# protoc --version
+message("Look here!!!!!!!!!!!!")
+execute_process(
+  COMMAND
+  ${_PROTOBUF_PROTOC}
+  ARGS
+  --version
+)
+
 # find_package(Protobuf REQUIRED)
 # message(Protobuf_INCLUDE_DIRS="${Protobuf_INCLUDE_DIRS}")
 

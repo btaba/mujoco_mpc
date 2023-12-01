@@ -40,6 +40,9 @@ set(gRPC_ZLIB_PROVIDER "package" CACHE INTERNAL "")
 
 set(_PROTOBUF_LIBPROTOBUF libprotobuf)
 set(_REFLECTION grpc++_reflection)
+
+message(protoc="$<TARGET_FILE:protoc>")
+
 set(_PROTOBUF_PROTOC $<TARGET_FILE:protoc>)
 set(_GRPC_GRPCPP grpc++)
 set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
