@@ -48,13 +48,13 @@ jobs:
         libxrandr-dev
         libxi-dev
         ninja-build
-        unzip &&
+        unzip
+        protobuf-compiler &&
         PB_REL="https://github.com/protocolbuffers/protobuf/releases" &&
         curl -LO $PB_REL/download/v21.12/protoc-21.12-linux-x86_64.zip &&
         unzip protoc-21.12-linux-x86_64.zip bin/protoc -d /usr/local &&
         curl -LO https://github.com/protocolbuffers/protobuf/archive/refs/tags/v21.12.tar.gz &&
-        tar -xvzf v21.12.tar.gz &&
-
+        tar -xvzf v21.12.tar.gz
     # protobuf-compiler=3.12.*
     # curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor >bazel-archive-keyring.gpg &&
     # sudo mv bazel-archive-keyring.gpg /usr/share/keyrings &&
