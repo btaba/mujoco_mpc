@@ -39,6 +39,7 @@ jobs:
     #     os: ${{ matrix.os }}
     - name: Prepare Linux
       if: ${{ runner.os == 'Linux' }}
+      # manually install protoc since the protobuf-compiler version on ubuntu-20.04 is too old
       run: >
         sudo apt-get update && sudo apt-get install
         curl
@@ -49,12 +50,17 @@ jobs:
         libxi-dev
         ninja-build
         unzip &&
-        PB_REL="https://github.com/protocolbuffers/protobuf/releases" &&
-        curl -LO $PB_REL/download/v21.12/protoc-21.12-linux-x86_64.zip &&
-        unzip protoc-21.12-linux-x86_64.zip bin/protoc -d /usr/local &&
+        git clone https://github.com/abseil/abseil-cpp.git &&
+        cd abseil-cpp && mkdir build && cd build &&
+        cmake .. -DCMAKE_INSTALL_PREFIX=~/Source/CMakeProject/install &&
+        cmake --build . --target install && cd ../.. &&
         curl -LO https://github.com/protocolbuffers/protobuf/archive/refs/tags/v21.12.tar.gz &&
-        tar -xzf v21.12.tar.gz &&
-        sudo mv protobuf-21.12/src/google /usr/include/
+        tar -xzf v21.12.tar.gz && cd protobuf-21.12 &&
+        cmake .  -Dprotobuf_BUILD_TESTS=OFF &&
+        cmake --build .
+    # PB_REL="https://github.com/protocolbuffers/protobuf/releases" &&
+    # curl -LO $PB_REL/download/v21.12/protoc-21.12-linux-x86_64.zip &&
+    # unzip protoc-21.12-linux-x86_64.zip bin/protoc -d /usr/local &&
     # protobuf-compiler=3.12.*
     # curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor >bazel-archive-keyring.gpg &&
     # sudo mv bazel-archive-keyring.gpg /usr/share/keyrings &&
