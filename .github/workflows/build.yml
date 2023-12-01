@@ -21,7 +21,7 @@ jobs:
               -DMJPC_BUILD_GRPC_SERVICE:BOOL=ON
             additional_targets: "agent_server direct_server filter_server"
             tmpdir: "/tmp"
-          - os: macos-13
+          - os: macos-12
             cmake_args: >-
               -G Ninja
               -DMJPC_BUILD_GRPC_SERVICE:BOOL=ON
@@ -47,7 +47,12 @@ jobs:
         unzip
     - name: Prepare macOS
       if: ${{ runner.os == 'macOS' }}
-      run: brew install ninja protobuf@21
+      run: >
+        brew install ninja protobuf@21 &&
+        echo 'export PATH="/usr/local/opt/protobuf@21/bin:$PATH"' >> /Users/runner/.bash_profile &&
+        export LDFLAGS="-L/usr/local/opt/protobuf@21/lib" &&
+        export CPPFLAGS="-I/usr/local/opt/protobuf@21/include" &&
+        export PKG_CONFIG_PATH="/usr/local/opt/protobuf@21/lib/pkgconfig"
     - name: Install protoc on Linux
       # Manually install protoc since the available `protobuf-compiler` version 3.6.1 on
       # ubuntu-20.04 is incompatible with protos in this library.
