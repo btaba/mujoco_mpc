@@ -47,8 +47,6 @@ jobs:
         libxcursor-dev
         libxrandr-dev
         libxi-dev
-        protobuf-compiler
-        libprotobuf-dev
         ninja-build
         unzip &&
         PB_REL="https://github.com/protocolbuffers/protobuf/releases" &&
