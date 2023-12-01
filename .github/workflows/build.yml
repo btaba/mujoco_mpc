@@ -60,8 +60,8 @@ jobs:
         cd abseil-cpp && mkdir build && cd build &&
         cmake .. -DCMAKE_INSTALL_PREFIX=~/Source/CMakeProject/install &&
         cmake --build . --target install && cd ../.. &&
-        curl -LO https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.25.1.tar.gz &&
-        tar -xzf v3.25.1.tar.gz && cd protobuf-3.25.1 &&
+        curl -LO https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.25.0.tar.gz &&
+        tar -xzf v3.25.0.tar.gz && cd protobuf-3.25.0 &&
         cmake .  -Dprotobuf_BUILD_TESTS=OFF &&
         sudo cmake --build . --config Release --target install
     # - name: Print protoc version
