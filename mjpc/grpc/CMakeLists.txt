@@ -20,20 +20,20 @@ set(BUILD_SHARED_LIBS
   CACHE INTERNAL "Build SHARED libraries"
 )
 
-# findorfetch(
-#   USE_SYSTEM_PACKAGE
-#   OFF
-#   PACKAGE_NAME
-#   gRPC
-#   LIBRARY_NAME
-#   gRPC
-#   GIT_REPO
-#   https://github.com/grpc/grpc
-#   GIT_TAG
-#   v1.53.0
-#   TARGETS
-#   gRPC
-# )
+findorfetch(
+  USE_SYSTEM_PACKAGE
+  OFF
+  PACKAGE_NAME
+  gRPC
+  LIBRARY_NAME
+  gRPC
+  GIT_REPO
+  https://github.com/grpc/grpc
+  GIT_TAG
+  v1.53.0
+  TARGETS
+  gRPC
+)
 
 find_package(ZLIB REQUIRED)
 set(gRPC_ZLIB_PROVIDER "package" CACHE INTERNAL "")

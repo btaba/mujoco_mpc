@@ -118,60 +118,47 @@ findorfetch(
   EXCLUDE_FROM_ALL
 )
 
+# # if (MJPC_BUILD_GRPC_SERVICE)
+# set(ABSL_PROPAGATE_CXX_STD ON)
+# set(ABSL_BUILD_TESTING OFF)
+# findorfetch(
+#   USE_SYSTEM_PACKAGE
+#   OFF
+#   PACKAGE_NAME
+#   absl
+#   LIBRARY_NAME
+#   abseil-cpp
+#   GIT_REPO
+#   https://github.com/abseil/abseil-cpp.git
+#   GIT_TAG
+#   ${MUJOCO_DEP_VERSION_abseil}
+#   TARGETS
+#   absl
+#   EXCLUDE_FROM_ALL
+# )
+# # endif()
 if (NOT MJPC_BUILD_GRPC_SERVICE)
   set(ABSL_ENABLE_INSTALL ON)
   set(protobuf_BUILD_LIBPROTOC ON)
   set(protobuf_BUILD_TESTS OFF)
+  set(protobuf_VERBOSE ON)
   findorfetch(
     USE_SYSTEM_PACKAGE
     OFF
     PACKAGE_NAME
     protobuf
     LIBRARY_NAME
-    libprotobuf
+    protobuf
     GIT_REPO
     https://github.com/protocolbuffers/protobuf.git
     GIT_TAG
-    v4.25.0
+    v4.25.1
     TARGETS
     protoc
     gtest
     gmock
     gtest_main
     EXCLUDE_FROM_ALL
-  )
-else()
-  set(ABSL_PROPAGATE_CXX_STD ON)
-  set(ABSL_BUILD_TESTING OFF)
-  findorfetch(
-    USE_SYSTEM_PACKAGE
-    OFF
-    PACKAGE_NAME
-    absl
-    LIBRARY_NAME
-    abseil-cpp
-    GIT_REPO
-    https://github.com/abseil/abseil-cpp.git
-    GIT_TAG
-    ${MUJOCO_DEP_VERSION_abseil}
-    TARGETS
-    absl::core_headers
-    EXCLUDE_FROM_ALL
-  )
-
-  findorfetch(
-    USE_SYSTEM_PACKAGE
-    OFF
-    PACKAGE_NAME
-    gRPC
-    LIBRARY_NAME
-    gRPC
-    GIT_REPO
-    https://github.com/grpc/grpc
-    GIT_TAG
-    v1.53.0
-    TARGETS
-    gRPC
   )
 endif()
 

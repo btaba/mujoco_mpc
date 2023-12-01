@@ -24,25 +24,33 @@ target_link_libraries(
 )
 target_include_directories(threadpool PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
+# if (NOT MJPC_BUILD_GRPC_SERVICE)
+#   set(ABSL_ENABLE_INSTALL ON)
+#   set(protobuf_BUILD_LIBPROTOC ON)
+#   set(protobuf_BUILD_TESTS OFF)
+#   set(protobuf_VERBOSE ON)
+#   findorfetch(
+#     USE_SYSTEM_PACKAGE
+#     OFF
+#     PACKAGE_NAME
+#     protobuf
+#     LIBRARY_NAME
+#     protobuf
+#     GIT_REPO
+#     https://github.com/protocolbuffers/protobuf.git
+#     GIT_TAG
+#     v4.25.1
+#     TARGETS
+#     protoc
+#     gtest
+#     gmock
+#     gtest_main
+#     EXCLUDE_FROM_ALL
+#   )
+# endif()
 
 set(_PROTOBUF_LIBPROTOBUF libprotobuf)
 set(_PROTOBUF_PROTOC $<TARGET_FILE:protoc>)
-
-# protoc --version
-message("Look here!!!!!!!!!!!!")
-execute_process(
-  COMMAND
-  ${_PROTOBUF_PROTOC}
-  ARGS
-  --version
-)
-
-# find_package(Protobuf REQUIRED)
-# message(Protobuf_INCLUDE_DIRS="${Protobuf_INCLUDE_DIRS}")
-
-# include_directories(${Protobuf_INCLUDE_DIRS})
-# set(_PROTOBUF_PROTOC ${Protobuf_PROTOC_EXECUTABLE})
-# message(Protobuf_PROTOC_EXECUTABLE="${Protobuf_PROTOC_EXECUTABLE}")
 
 get_filename_component(agent_state_proto "./agent_state.proto" ABSOLUTE)
 get_filename_component(agent_state_proto_path "${agent_state_proto}" PATH)
