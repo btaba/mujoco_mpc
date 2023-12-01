@@ -51,7 +51,14 @@ jobs:
         unzip
         g++
         git
-        bazel &&
+        apt-transport-https
+        gnupg &&
+      # bazel
+        curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor >bazel-archive-keyring.gpg &&
+        sudo mv bazel-archive-keyring.gpg /usr/share/keyrings &&
+        echo "deb [arch=amd64 signed-by=/usr/share/keyrings/bazel-archive-keyring.gpg] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list &&
+        sudo apt update && sudo apt install bazel &&
+      # protobuf
         curl -LO https://github.com/protocolbuffers/protobuf/archive/refs/tags/v25.1.tar.gz &&
         tar -xvzf  v25.1.tar.gz &&
         cd protobuf-25.1 &&
