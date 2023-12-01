@@ -116,23 +116,45 @@ findorfetch(
   EXCLUDE_FROM_ALL
 )
 
-set(ABSL_PROPAGATE_CXX_STD ON)
-set(ABSL_BUILD_TESTING OFF)
+set(ABSL_ENABLE_INSTALL ON)
+set(protobuf_BUILD_LIBPROTOC ON)
+set(protobuf_BUILD_TESTS OFF)
 findorfetch(
   USE_SYSTEM_PACKAGE
   OFF
   PACKAGE_NAME
-  absl
+  protobuf
   LIBRARY_NAME
-  abseil-cpp
+  protobuf
   GIT_REPO
-  https://github.com/abseil/abseil-cpp.git
+  https://github.com/protocolbuffers/protobuf.git
   GIT_TAG
-  ${MUJOCO_DEP_VERSION_abseil}
+  v3.25.1
   TARGETS
-  absl::core_headers
+  protoc
+  gtest
+  gmock
+  gtest_main
   EXCLUDE_FROM_ALL
 )
+
+# set(ABSL_PROPAGATE_CXX_STD ON)
+# set(ABSL_BUILD_TESTING OFF)
+# findorfetch(
+#   USE_SYSTEM_PACKAGE
+#   OFF
+#   PACKAGE_NAME
+#   absl
+#   LIBRARY_NAME
+#   abseil-cpp
+#   GIT_REPO
+#   https://github.com/abseil/abseil-cpp.git
+#   GIT_TAG
+#   ${MUJOCO_DEP_VERSION_abseil}
+#   TARGETS
+#   absl::core_headers
+#   EXCLUDE_FROM_ALL
+# )
 
 set(GLFW_BUILD_EXAMPLES OFF)
 set(GLFW_BUILD_TESTS OFF)
