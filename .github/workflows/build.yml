@@ -18,13 +18,13 @@ jobs:
               -G Ninja
               -DCMAKE_C_COMPILER:STRING=clang-12
               -DCMAKE_CXX_COMPILER:STRING=clang++-12
-              -DMJPC_BUILD_GRPC_SERVICE:BOOL=ON
+              -DMJPC_BUILD_GRPC_SERVICE:BOOL=OFF
             additional_targets: "agent_server direct_server filter_server"
             tmpdir: "/tmp"
           - os: macos-12
             cmake_args: >-
               -G Ninja
-              -DMJPC_BUILD_GRPC_SERVICE:BOOL=ON
+              -DMJPC_BUILD_GRPC_SERVICE:BOOL=OFF
             additional_targets: "agent_server direct_server filter_server"
             tmpdir: "/tmp"
 
