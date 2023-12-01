@@ -134,26 +134,41 @@ findorfetch(
 #   EXCLUDE_FROM_ALL
 # )
 
-set(ABSL_ENABLE_INSTALL ON)
-set(protobuf_BUILD_LIBPROTOC ON)
-set(protobuf_BUILD_TESTS OFF)
+# set(ABSL_ENABLE_INSTALL ON)
+# set(protobuf_BUILD_LIBPROTOC ON)
+# set(protobuf_BUILD_TESTS OFF)
+# findorfetch(
+#   USE_SYSTEM_PACKAGE
+#   OFF
+#   PACKAGE_NAME
+#   protobuf
+#   LIBRARY_NAME
+#   libprotobuf
+#   GIT_REPO
+#   https://github.com/protocolbuffers/protobuf.git
+#   GIT_TAG
+#   v3.21.12
+#   TARGETS
+#   protoc
+#   gtest
+#   gmock
+#   gtest_main
+#   EXCLUDE_FROM_ALL
+# )
+
 findorfetch(
   USE_SYSTEM_PACKAGE
   OFF
   PACKAGE_NAME
-  protobuf
+  gRPC
   LIBRARY_NAME
-  libprotobuf
+  gRPC
   GIT_REPO
-  https://github.com/protocolbuffers/protobuf.git
+  https://github.com/grpc/grpc
   GIT_TAG
-  v3.25.0
+  v1.53.0
   TARGETS
-  protoc
-  gtest
-  gmock
-  gtest_main
-  EXCLUDE_FROM_ALL
+  gRPC
 )
 
 set(GLFW_BUILD_EXAMPLES OFF)
