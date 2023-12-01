@@ -33,14 +33,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    # # workaround for broken clang on ubuntu runner until https://github.com/actions/runner-images/issues/8659 get fixed
-    # - uses: mjp41/workaround8649@7929373c0fe5caf844d8115adccef39e3b5362e7
-    #   with:
-    #     os: ${{ matrix.os }}
     - name: Prepare Linux
       if: ${{ runner.os == 'Linux' }}
-      # manually install protoc since `protobuf-compiler` version 3.6.1 on ubuntu-20.04 is incompatible
-      # with this library
       run: >
         sudo apt-get update && sudo apt-get install
         curl
@@ -50,7 +44,17 @@ jobs:
         libxrandr-dev
         libxi-dev
         ninja-build
-        unzip &&
+        unzip
+    - name: Prepare macOS
+      if: ${{ runner.os == 'macOS' }}
+      run: brew install ninja
+    - name: Print protoc version
+      run: protoc --version
+    - name: Install protoc
+      # Manually install protoc since the available `protobuf-compiler` version 3.6.1 on
+      # ubuntu-20.04 is incompatible with protos in this library.
+      run: >
+        sudo apt-get remove protobuf-compiler &&
         git clone https://github.com/abseil/abseil-cpp.git &&
         cd abseil-cpp && mkdir build && cd build &&
         cmake .. -DCMAKE_INSTALL_PREFIX=~/Source/CMakeProject/install &&
@@ -59,12 +63,6 @@ jobs:
         tar -xzf v21.12.tar.gz && cd protobuf-21.12 &&
         cmake .  -Dprotobuf_BUILD_TESTS=OFF &&
         sudo cmake --build . --config Release --target install
-    # PB_REL="https://github.com/protocolbuffers/protobuf/releases" &&
-    # curl -LO $PB_REL/download/v21.12/protoc-21.12-linux-x86_64.zip &&
-    # unzip protoc-21.12-linux-x86_64.zip bin/protoc -d /usr/local &&
-    - name: Prepare macOS
-      if: ${{ runner.os == 'macOS' }}
-      run: brew install ninja protobuf
     - name: Print protoc version
       run: protoc --version
     - name: Prepare Windows
