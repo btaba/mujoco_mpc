@@ -26,10 +26,7 @@ target_include_directories(threadpool PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 
 set(_PROTOBUF_LIBPROTOBUF libprotobuf)
-# set(_REFLECTION grpc++_reflection)
 set(_PROTOBUF_PROTOC $<TARGET_FILE:protoc>)
-# set(_GRPC_GRPCPP grpc++)
-# set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
 
 # find_package(Protobuf REQUIRED)
 # message(Protobuf_INCLUDE_DIRS="${Protobuf_INCLUDE_DIRS}")
