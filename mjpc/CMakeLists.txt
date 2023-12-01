@@ -44,7 +44,6 @@ add_custom_command(
   --cpp_out "${CMAKE_CURRENT_BINARY_DIR}"
   -I "${agent_state_proto_path}"
   "${agent_state_proto}"
-  --experimental_allow_proto3_optional
   DEPENDS
   "${agent_state_proto}"
 )
