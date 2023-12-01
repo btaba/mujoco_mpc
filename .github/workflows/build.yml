@@ -49,7 +49,7 @@ jobs:
         libxi-dev
         ninja-build
         unzip &&
-        sudo apt-get satisfy "protobuf-compiler >= 3.12"
+        sudo apt-get satisfy "protobuf-compiler (>= 3.12)"
     # PB_REL="https://github.com/protocolbuffers/protobuf/releases" &&
     # curl -LO $PB_REL/download/v21.12/protoc-21.12-linux-x86_64.zip &&
     # unzip protoc-21.12-linux-x86_64.zip bin/protoc -d /usr/local &&
