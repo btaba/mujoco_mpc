@@ -48,11 +48,8 @@ jobs:
     - name: Prepare macOS
       if: ${{ runner.os == 'macOS' }}
       run: >
-        brew install ninja protobuf@21 &&
-        echo 'export PATH="/usr/local/opt/protobuf@21/bin:$PATH"' >> /Users/runner/.bash_profile &&
-        export LDFLAGS="-L/usr/local/opt/protobuf@21/lib" &&
-        export CPPFLAGS="-I/usr/local/opt/protobuf@21/include" &&
-        export PKG_CONFIG_PATH="/usr/local/opt/protobuf@21/lib/pkgconfig"
+        brew install ninja  
+      # protobuf
     - name: Install protoc on Linux
       # Manually install protoc since the available `protobuf-compiler` version 3.6.1 on
       # ubuntu-20.04 is incompatible with protos in this library.
@@ -67,8 +64,8 @@ jobs:
         tar -xzf v3.21.12.tar.gz && cd protobuf-3.21.12 &&
         cmake .  -Dprotobuf_BUILD_TESTS=OFF &&
         sudo cmake --build . --config Release --target install
-    - name: Print protoc version
-      run: protoc --version
+    # - name: Print protoc version
+    #   run: protoc --version
     - name: Prepare Windows
       if: ${{ runner.os == 'Windows' }}
       # Install llvm 16 manually, remove after
@@ -92,7 +89,7 @@ jobs:
     - name: Check header
       shell: bash
       run: >
-        pwd && ls && cat mjpc/agent_state.pb.h
+        pwd && ls && cat mjpc/agent_state.pb.h | head -n 50
     - name: Build MuJoCo MPC
       working-directory: build
       run: cmake --build . --config=Release ${{ matrix.cmake_build_args }} --target mjpc agent_test cost_derivatives_test norm_test rollout_test threadpool_test trajectory_test utilities_test direct_force_test direct_optimize_test direct_parameter_test direct_sensor_test direct_trajectory_test direct_utilities_test batch_filter_test batch_prior_test kalman_test unscented_test ${{ matrix.additional_targets }}
