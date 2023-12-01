@@ -25,6 +25,8 @@ target_link_libraries(
 target_include_directories(threadpool PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 find_package(Protobuf REQUIRED)
+message(Protobuf_INCLUDE_DIRS="${Protobuf_INCLUDE_DIRS}")
+
 include_directories(${Protobuf_INCLUDE_DIRS})
 set(_PROTOBUF_PROTOC ${Protobuf_PROTOC_EXECUTABLE})
 
