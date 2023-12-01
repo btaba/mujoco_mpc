@@ -39,7 +39,8 @@ jobs:
     #     os: ${{ matrix.os }}
     - name: Prepare Linux
       if: ${{ runner.os == 'Linux' }}
-      # manually install protoc since `protobuf-compiler` version 3.6.1 on ubuntu-20.04 is too old
+      # manually install protoc since `protobuf-compiler` version 3.6.1 on ubuntu-20.04 is incompatible
+      # with this library
       run: >
         sudo apt-get update && sudo apt-get install
         curl
@@ -57,7 +58,7 @@ jobs:
         curl -LO https://github.com/protocolbuffers/protobuf/archive/refs/tags/v21.12.tar.gz &&
         tar -xzf v21.12.tar.gz && cd protobuf-21.12 &&
         cmake .  -Dprotobuf_BUILD_TESTS=OFF &&
-        cmake --build . --target install
+        sudo cmake --build . --config Release --target install
     # PB_REL="https://github.com/protocolbuffers/protobuf/releases" &&
     # curl -LO $PB_REL/download/v21.12/protoc-21.12-linux-x86_64.zip &&
     # unzip protoc-21.12-linux-x86_64.zip bin/protoc -d /usr/local &&
