@@ -42,7 +42,7 @@ include(MujocoMacOS)
 
 option(MJPC_BUILD_TESTS "Build tests for MJPC" ON)
 option(MJPC_GRPC_BUILD_TESTS "Build tests for gRPC" ON)
-option(MJPC_BUILD_GRPC_SERVICE "Build MJPC gRPC service." OFF)
+option(MJPC_BUILD_GRPC_SERVICE "Build MJPC gRPC service." ON)
 option(PYMJPC_BUILD_TESTS "Build tests for Python bindings" ON)
 
 include(FindOrFetch)
@@ -188,28 +188,46 @@ findorfetch(
 #   )
 # endif()
 
-set(ABSL_ENABLE_INSTALL ON)
-set(protobuf_BUILD_LIBPROTOC ON)
-set(protobuf_BUILD_TESTS OFF)
-set(protobuf_VERBOSE ON)
-findorfetch(
-  USE_SYSTEM_PACKAGE
-  OFF
-  PACKAGE_NAME
-  protobuf
-  LIBRARY_NAME
-  protobuf
-  GIT_REPO
-  https://github.com/protocolbuffers/protobuf.git
-  GIT_TAG
-  v4.25.1
-  TARGETS
-  protoc
-  gtest
-  gmock
-  gtest_main
-  EXCLUDE_FROM_ALL
-)
+if (NOT MJPC_BUILD_GRPC_SERVICE)
+  set(ABSL_ENABLE_INSTALL ON)
+  set(protobuf_BUILD_LIBPROTOC ON)
+  set(protobuf_BUILD_TESTS OFF)
+  set(protobuf_VERBOSE ON)
+  findorfetch(
+    USE_SYSTEM_PACKAGE
+    OFF
+    PACKAGE_NAME
+    protobuf
+    LIBRARY_NAME
+    protobuf
+    GIT_REPO
+    https://github.com/protocolbuffers/protobuf.git
+    GIT_TAG
+    v4.25.1
+    TARGETS
+    protoc
+    gtest
+    gmock
+    gtest_main
+    EXCLUDE_FROM_ALL
+  )
+else()
+  findorfetch(
+    USE_SYSTEM_PACKAGE
+    OFF
+    PACKAGE_NAME
+    gRPC
+    LIBRARY_NAME
+    gRPC
+    GIT_REPO
+    https://github.com/grpc/grpc
+    GIT_TAG
+    v1.53.0
+    TARGETS
+    gRPC
+  )
+endif()
+
 
 set(GLFW_BUILD_EXAMPLES OFF)
 set(GLFW_BUILD_TESTS OFF)
