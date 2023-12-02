@@ -20,7 +20,8 @@ set(BUILD_SHARED_LIBS
   CACHE INTERNAL "Build SHARED libraries"
 )
 
-set(gRPC_USE_PROTO_LITE OFF)
+# set(gRPC_USE_PROTO_LITE OFF)
+set(gRPC_PROTOBUF_PROVIDER "package")
 findorfetch(
   USE_SYSTEM_PACKAGE
   OFF

@@ -163,30 +163,53 @@ findorfetch(
 # )
 # # endif()
 
-if (NOT MJPC_BUILD_GRPC_SERVICE)
-  set(ABSL_ENABLE_INSTALL ON)
-  set(protobuf_BUILD_LIBPROTOC ON)
-  set(protobuf_BUILD_TESTS OFF)
-  set(protobuf_VERBOSE ON)
-  findorfetch(
-    USE_SYSTEM_PACKAGE
-    OFF
-    PACKAGE_NAME
-    protobuf
-    LIBRARY_NAME
-    protobuf
-    GIT_REPO
-    https://github.com/protocolbuffers/protobuf.git
-    GIT_TAG
-    v4.25.1
-    TARGETS
-    protoc
-    gtest
-    gmock
-    gtest_main
-    EXCLUDE_FROM_ALL
-  )
-endif()
+# if (NOT MJPC_BUILD_GRPC_SERVICE)
+#   set(ABSL_ENABLE_INSTALL ON)
+#   set(protobuf_BUILD_LIBPROTOC ON)
+#   set(protobuf_BUILD_TESTS OFF)
+#   set(protobuf_VERBOSE ON)
+#   findorfetch(
+#     USE_SYSTEM_PACKAGE
+#     OFF
+#     PACKAGE_NAME
+#     protobuf
+#     LIBRARY_NAME
+#     protobuf
+#     GIT_REPO
+#     https://github.com/protocolbuffers/protobuf.git
+#     GIT_TAG
+#     v4.25.1
+#     TARGETS
+#     protoc
+#     gtest
+#     gmock
+#     gtest_main
+#     EXCLUDE_FROM_ALL
+#   )
+# endif()
+
+set(ABSL_ENABLE_INSTALL ON)
+set(protobuf_BUILD_LIBPROTOC ON)
+set(protobuf_BUILD_TESTS OFF)
+set(protobuf_VERBOSE ON)
+findorfetch(
+  USE_SYSTEM_PACKAGE
+  OFF
+  PACKAGE_NAME
+  protobuf
+  LIBRARY_NAME
+  protobuf
+  GIT_REPO
+  https://github.com/protocolbuffers/protobuf.git
+  GIT_TAG
+  v4.25.1
+  TARGETS
+  protoc
+  gtest
+  gmock
+  gtest_main
+  EXCLUDE_FROM_ALL
+)
 
 set(GLFW_BUILD_EXAMPLES OFF)
 set(GLFW_BUILD_TESTS OFF)
